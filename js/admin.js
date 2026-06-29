@@ -1,7 +1,3 @@
-// ═══════════════════════════════════════════════════
-// JOKANDA — Admin Dashboard JS
-// Sécurité : Firebase Authentication (email + mdp)
-// ═══════════════════════════════════════════════════
 
 import {
   collection, getDocs, addDoc, updateDoc, deleteDoc,
@@ -16,9 +12,7 @@ import {
 
 import { db, auth } from "../js/firebase-config.js";
 
-// ─────────────────────────────────────────────────────
-// ⚠️  CLOUDINARY — REMPLACER PAR VOS VRAIES VALEURS
-// ─────────────────────────────────────────────────────
+
 const CLOUDINARY_CLOUD  = "dqctuug18";
 const CLOUDINARY_PRESET = "Jokanda_preset";
 
@@ -38,11 +32,7 @@ const CATEGORY_LABELS = {
   taffetas:     "Taffetas",
 };
 
-// ══════════════════════════════════════════════════════
-// AUTH — Firebase Authentication
-// ══════════════════════════════════════════════════════
 
-// Surveille l'état de connexion en temps réel
 onAuthStateChanged(auth, (user) => {
   if (user) {
     // Utilisateur connecté → afficher le panel admin
@@ -111,9 +101,7 @@ document.getElementById("emailInput")?.addEventListener("keydown", e => {
   if (e.key === "Enter") document.getElementById("passwordInput")?.focus();
 });
 
-// ══════════════════════════════════════════════════════
-// TABS
-// ══════════════════════════════════════════════════════
+
 window.showTab = function (tabName) {
   document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
   document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
@@ -122,9 +110,7 @@ window.showTab = function (tabName) {
   if (tabName === "add" && !document.getElementById("editProductId").value) resetForm();
 };
 
-// ══════════════════════════════════════════════════════
-// PRODUITS — Lecture
-// ══════════════════════════════════════════════════════
+
 let productsCache = [];
 
 async function loadProducts() {
@@ -186,9 +172,6 @@ function renderTable(products) {
     </div>`;
 }
 
-// ══════════════════════════════════════════════════════
-// PRODUITS — Édition
-// ══════════════════════════════════════════════════════
 window.editProduct = function (id) {
   const product = productsCache.find(p => p.id === id);
   if (!product) return;
@@ -226,6 +209,7 @@ window.resetForm = function () {
   document.getElementById("formSubtitle").textContent         = "Remplissez les informations du nouveau tissu";
   document.getElementById("saveBtnText").textContent          = "Enregistrer le produit";
 };
+
 
 // ══════════════════════════════════════════════════════
 // IMAGE — Prévisualisation & upload Cloudinary

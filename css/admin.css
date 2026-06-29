@@ -1,6 +1,3 @@
-/* ═══════════════════════════════════════════════
-   JOKANDA — Admin Dashboard CSS
-   ═══════════════════════════════════════════════ */
 
 :root {
   --cream:        #F8F4EE;
@@ -26,7 +23,6 @@ body { font-family: var(--font-body); background: var(--cream); color: var(--cha
 a { text-decoration: none; color: inherit; }
 button { font-family: var(--font-body); cursor: pointer; border: none; }
 
-/* ── LOGIN SCREEN ── */
 .login-screen {
   min-height: 100vh;
   display: flex;
@@ -122,7 +118,6 @@ button { font-family: var(--font-body); cursor: pointer; border: none; }
   gap: 1rem;
 }
 
-/* ── BUTTONS ── */
 .btn-primary {
   width: 100%;
   padding: 0.9rem 2rem;
@@ -192,7 +187,6 @@ button { font-family: var(--font-body); cursor: pointer; border: none; }
   margin-bottom: 1rem;
 }
 
-/* ── ADMIN LAYOUT ── */
 #adminPanel {
   display: flex;
   min-height: 100vh;
@@ -276,7 +270,6 @@ button { font-family: var(--font-body); cursor: pointer; border: none; }
   padding-top: 1rem;
 }
 
-/* ── MAIN ── */
 .admin-main {
   flex: 1;
   padding: 2.5rem;
@@ -304,11 +297,9 @@ button { font-family: var(--font-body); cursor: pointer; border: none; }
 }
 .page-header .btn-primary { width: auto; }
 
-/* ── TAB PANELS ── */
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 
-/* ── PRODUCTS TABLE ── */
 .products-table-wrap {
   background: var(--white);
   border: 1px solid var(--beige);
@@ -372,7 +363,6 @@ button { font-family: var(--font-body); cursor: pointer; border: none; }
   font-size: 0.88rem;
 }
 
-/* ── FORM CARD ── */
 .form-card {
   background: var(--white);
   border: 1px solid var(--beige);
@@ -386,7 +376,6 @@ button { font-family: var(--font-body); cursor: pointer; border: none; }
   margin-top: 1.5rem;
 }
 
-/* ── UPLOAD AREA ── */
 .upload-area {
   border: 1.5px dashed var(--beige-mid);
   padding: 2.5rem;
@@ -421,7 +410,6 @@ button { font-family: var(--font-body); cursor: pointer; border: none; }
   color: var(--charcoal-soft);
 }
 
-/* ── MODAL ── */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -448,7 +436,6 @@ button { font-family: var(--font-body); cursor: pointer; border: none; }
 .modal p { font-size: 0.85rem; color: var(--charcoal-soft); margin-bottom: 2rem; }
 .modal-actions { display: flex; gap: 1rem; justify-content: center; }
 
-/* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   .sidebar { width: 200px; }
   .admin-main { padding: 1.5rem; max-width: calc(100vw - 200px); }
