@@ -1,0 +1,19 @@
+// ═══════════════════════════════════════════════════
+// JOKANDA — Règles de sécurité Firestore
+// ═══════════════════════════════════════════════════
+//
+// LECTURE  : publique (le site vitrine peut lire les produits)
+// ÉCRITURE : uniquement si l'utilisateur est connecté via Firebase Auth
+//            (seul l'admin authentifié peut ajouter/modifier/supprimer)
+//
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /products/{productId} {
+      // Tout le monde peut lire (site vitrine)
+      allow read: if true;
+      // Écriture uniquement si connecté via Firebase Auth
+      allow write: if request.auth != null;
+    }
+  }
+}

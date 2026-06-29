@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jokanda — Administration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/admin.css" />
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="login-logo">
+        <span class="logo-ar">جوكندا</span>
+        <span class="logo-fr">JOKANDA</span>
+      </div>
+      <h1>Administration</h1>
+      <p class="login-sub">Espace réservé au gérant de la boutique</p>
+      <div class="form-group">
+        <label>Adresse email</label>
+        <input type="email" id="emailInput" placeholder="admin@jokanda.com" autocomplete="email" />
+      </div>
+      <div class="form-group">
+        <label>Mot de passe</label>
+        <input type="password" id="passwordInput" placeholder="Votre mot de passe" autocomplete="current-password" />
+      </div>
+      <div id="loginError" class="error-msg" style="display:none"></div>
+      <button class="btn-primary" id="loginBtn" onclick="login()">
+        <span id="loginBtnText">Connexion</span>
+      </button>
+      <p style="margin-top:1.5rem;font-size:0.72rem;color:var(--charcoal-soft);text-align:center;letter-spacing:0.05em;">
+        🔒 Connexion sécurisée via Firebase Authentication
+      </p>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div id="adminPanel" style="display:none">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <span class="logo-ar">جوكندا</span>
+        <span class="logo-fr">JOKANDA</span>
+        <span class="sidebar-role">Administration</span>
+        <span id="adminUserEmail" style="display:block;font-size:0.62rem;color:var(--gold);margin-top:4px;word-break:break-all;"></span>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="nav-item active" onclick="showTab('products')">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+          Produits
+        </button>
+        <button class="nav-item" onclick="showTab('add')">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Ajouter un produit
+        </button>
+      </nav>
+      <div class="sidebar-bottom">
+        <a href="../index.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          Voir le site
+        </a>
+        <button class="nav-item logout" onclick="logout()">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+          Déconnexion
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="admin-main">
+
+      <!-- PRODUCTS TAB -->
+      <div id="tab-products" class="tab-panel active">
+        <div class="page-header">
+          <div>
+            <h2>Gestion des Produits</h2>
+            <p>Gérez votre catalogue de tissus</p>
+          </div>
+          <button class="btn-primary" onclick="showTab('add')">+ Ajouter un produit</button>
+        </div>
+        <div id="productsTable">
+          <div class="loading-msg">Chargement…</div>
+        </div>
+      </div>
+
+      <!-- ADD/EDIT TAB -->
+      <div id="tab-add" class="tab-panel">
+        <div class="page-header">
+          <div>
+            <h2 id="formTitle">Ajouter un Produit</h2>
+            <p id="formSubtitle">Remplissez les informations du nouveau tissu</p>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <input type="hidden" id="editProductId" />
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nom du produit *</label>
+              <input type="text" id="productName" placeholder="Ex: Satin Ivoire Premium" />
+            </div>
+            <div class="form-group">
+              <label>Catégorie *</label>
+              <select id="productCategory">
+                <option value="">— Choisir une catégorie —</option>
+                <option value="satin">Satin — ساتان</option>
+                <option value="mousseline">Mousseline — موسلين</option>
+                <option value="dentelle">Dentelle — دانتيل</option>
+                <option value="tulle_brodee">Tulle Brodée — تول مطروز</option>
+                <option value="tulle_uni">Tulle Uni — تول سادة</option>
+                <option value="contil">Contil — كونتيل</option>
+                <option value="galon">Galon — حرج</option>
+                <option value="velours">Velours — فلور</option>
+                <option value="crepe">Crêpe — كريب</option>
+                <option value="organza">Organza — اوركنزا</option>
+                <option value="qamariya">Qamariya — قمريا</option>
+                <option value="acetate">Acétate — اسيتات</option>
+                <option value="taffetas">Taffetas — تفتة</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="productDesc" rows="4" placeholder="Décrivez la qualité, la texture, les usages recommandés…"></textarea>
+          </div>
+
+          <!-- IMAGE UPLOAD -->
+          <div class="form-group">
+            <label>Image du produit</label>
+            <div class="upload-area" id="uploadArea">
+              <input type="file" id="imageFile" accept="image/*" onchange="previewImage(this)" style="display:none" />
+              <div id="uploadPlaceholder">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+                <p>Glisser-déposer ou <span onclick="document.getElementById('imageFile').click()" style="color:var(--gold);cursor:pointer">choisir une image</span></p>
+                <small>JPG, PNG, WEBP — max 5 Mo</small>
+              </div>
+              <img id="imagePreview" style="display:none;max-height:200px;border-radius:4px;" />
+            </div>
+            <div id="uploadProgress" style="display:none">
+              <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+              <p id="uploadStatus">Téléchargement en cours…</p>
+            </div>
+            <input type="hidden" id="imageUrl" />
+          </div>
+
+          <div id="formError" class="error-msg" style="display:none"></div>
+          <div id="formSuccess" class="success-msg" style="display:none"></div>
+
+          <div class="form-actions">
+            <button class="btn-secondary" onclick="resetForm()">Annuler</button>
+            <button class="btn-primary" onclick="saveProduct()">
+              <span id="saveBtnText">Enregistrer le produit</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- DELETE MODAL -->
+  <div class="modal-overlay" id="deleteModal" style="display:none">
+    <div class="modal">
+      <h3>Supprimer ce produit ?</h3>
+      <p>Cette action est irréversible.</p>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="closeDeleteModal()">Annuler</button>
+        <button class="btn-danger" onclick="confirmDelete()">Supprimer</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="../js/firebase-config.js"></script>
+  <script type="module" src="../js/admin.js"></script>
+</body>
+</html>
